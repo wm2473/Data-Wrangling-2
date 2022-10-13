@@ -86,10 +86,38 @@ reviews = tibble(
 ```
 
 
+# APIs
 
 ```{r}
 nyc_water = 
   GET("https://data.cityofnewyork.us/resource/ia2d-e54m.csv") %>% 
   content("parsed")
+# Content funtion is cleaning the data
+```
+
+```{r}
+nyc_water = 
+  GET("https://data.cityofnewyork.us/resource/ia2d-e54m.json") %>% 
+  content("text") %>%
+  jsonlite::fromJSON() %>%
+  as_tibble()
+```
+
+BRFSS
+```{r}
+brfss_df = 
+  GET("https://chronicdata.cdc.gov/resource/acme-vg9e.csv",
+      query = list("$limit" = 5000)) %>% 
+  content("parsed")
+```
+
+pokemon
+```{r}
+poke = 
+  GET("http://pokeapi.co/api/v2/pokemon/1") %>%
+  content()
+names(poke)
+
+poke[["stats"]]
 ```
 
